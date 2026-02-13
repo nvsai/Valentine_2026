@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sept & Oct ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* --- SPACE & LOVE THEME CSS --- */
+        :root {
+            --bg-gradient: radial-gradient(circle at 50% 50%, #800f2f 0%, #4a0a25 40%, #0f0c29 100%);
+            --space-light: #24243e;
+            --star-gold: #ffd700;
+            --heart-red: #ff4b6e;
+            --text-color: #ffffff;
+            --robot-grey: #4b6cb7;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            font-family: 'Quicksand', sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden; 
+            user-select: none;
+            position: relative;
+        }
+
+        /* --- BACKGROUND SYMBOLS --- */
+        .bg-symbol {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            user-select: none;
+            z-index: -1;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            text-shadow: 0 0 5px rgba(255, 75, 110, 0.8);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8) translateY(0); }
+            50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
+        }
+
+        /* --- THE GOOGLE MEET HEART BURST ANIMATION --- */
+        .burst-heart {
+            position: fixed;
+            bottom: -50px; /* Start below screen */
+            font-size: 2rem;
+            pointer-events: none; /* Let clicks pass through */
+            z-index: 9999;
+            animation: floatUp ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-110vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(89, 13, 34, 0.4);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 100, 150, 0.4);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 0 50px rgba(255, 75, 110, 0.6);
+            width: 90%;
+            max-width: 400px;
+            min-height: 480px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .level-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; }
+
+        h1, h2 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--star-gold);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            margin: 0;
+        }
+
+        .info-btn {
+            background: rgba(255, 192, 203, 0.3); border: 1px solid white; color: white;
+            width: 25px; height: 25px; border-radius: 50%; font-size: 0.9rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .info-btn:hover { background: var(--heart-red); transform: scale(1.1); }
+
+        p { font-size: 1.1rem; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+        .action-btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b); color: white; border: none;
+            padding: 12px 30px; border-radius: 50px; font-size: 1.2rem;
+            font-family: 'Fredoka One', cursive; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5); margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .action-btn:hover { transform: scale(1.05); box-shadow: 0 5px 30px rgba(255, 65, 108, 0.8); }
+
+        .modal-overlay {
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(40, 10, 30, 0.95); z-index: 100; border-radius: 25px;
+            align-items: center; justify-content: center; padding: 20px;
+            box-sizing: border-box; flex-direction: column;
+        }
+        .modal-content { color: white; text-align: center; }
+        .close-modal {
+            margin-top: 20px; background: transparent; border: 2px solid var(--heart-red);
+            color: white; padding: 5px 15px; border-radius: 20px; cursor: pointer;
+        }
+
+        .level { display: none; width: 100%; animation: floatIn 0.8s ease; }
+        .level.active { display: flex; flex-direction: column; align-items: center; }
+        @keyframes floatIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Level Specifics */
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+        .grid div { font-size: 2.2rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; height: 50px; width: 50px; }
+        .my-flower-img { width: 60px; height: 60px; object-fit: cover; border-radius: 50%; border: 2px solid gold; box-shadow: 0 0 15px gold; }
+
+        .btn-group { position: relative; height: 150px; width: 100%; margin-top: 20px;}
+        #yes-btn { position: absolute; left: 10px; top: 20px; z-index: 10; font-size: 1.2rem;}
+        #no-btn { 
+            position: absolute; right: 10px; top: 20px; background: #2d3436; color: #00ffcc; 
+            border: 2px solid #00ffcc; font-family: 'Share Tech Mono', monospace; padding: 10px 15px;
+            border-radius: 5px; box-shadow: 0 0 15px rgba(0, 255, 204, 0.4); font-size: 1rem; 
+            cursor: not-allowed; transition: 0.1s ease-out; z-index: 100;
+        }
+        
+        #basket-box { font-size: 5rem; cursor: pointer; transition: 0.2s; margin: 20px 0; }
+        .shake { animation: shake 0.5s; }
+        @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(10deg); } 50% { transform: rotate(0deg); } 75% { transform: rotate(-10deg); } 100% { transform: rotate(0deg); } }
+
+        .puzzle-grid {
+            display: grid; grid-template-columns: 1fr 1fr; width: 200px; height: 200px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/2026/2026510.png'); 
+            background-size: cover; background-position: center; border: 2px solid white;
+        }
+        .tile { background: var(--space-light); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .tile.hidden { visibility: hidden; }
+
+        .checkbox-list { text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px;}
+        .checkbox-list label { display: block; margin: 10px 0; cursor: pointer; }
+        input[type="checkbox"] { transform: scale(1.4); margin-right: 10px; accent-color: var(--heart-red); }
+
+        #moon-btn {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); display: flex; justify-content: center; align-items: center;
+            font-size: 3rem; margin: 20px auto; cursor: pointer; border: 4px solid rgba(255,255,255,0.3);
+        }
+        .moon-img-container img { width: 150px; border-radius: 10px; margin-bottom: 10px; border: 2px solid white; }
+
+        #game-area { width: 100%; height: 300px; background: rgba(0,0,0,0.3); position: relative; overflow: hidden; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
+        .falling-item { position: absolute; font-size: 3.5rem; animation: floatDown 4s linear infinite; cursor: pointer; user-select: none; }
+        @keyframes floatDown { from { top: -20%; } to { top: 120%; } }
+
+        .disney-quote { font-style: italic; color: var(--star-gold); margin-top: 10px; }
+        .us-photo { width: 100%; border-radius: 10px; border: 3px solid white; transform: rotate(-2deg); margin: 15px 0;}
+
+    </style>
+</head>
+<body>
+<audio id="bgMusic" autoplay loop>
+  <source src="todi_dher.mp3" type="audio/mpeg">
+</audio>
+<div class="container">
+
+    <div id="info-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 id="modal-title" style="color:var(--star-gold)">Did you know?</h2>
+            <p id="modal-text"></p>
+            <button class="close-modal" onclick="closeInfo()">Close</button>
+        </div>
+    </div>
+    
+    <div id="level-0" class="level active">
+        <h1>Two Libras ♎</h1>
+        <p>When September meets October...</p>
+        <p>The universe finds its perfect balance.</p>
+        <p>Are you ready for your mission, Astronaut?</p>
+        <button class="action-btn" onclick="nextLevel(1)">Launch Mission 🚀</button>
+    </div>
+
+    <div id="level-1" class="level">
+        <div class="level-header">
+            <h2>Level 1: Rose Day 🌹</h2>
+            <button class="info-btn" onclick="showInfo('rose')">ℹ️</button>
+        </div>
+        <p>The Goddess flower is lost in space!</p>
+        <p>Find <strong>that exact flower</strong> among the planets.</p>
+        <div class="grid" id="garden-grid"></div>
+    </div>
+
+    <div id="level-2" class="level">
+        <div class="level-header">
+            <h2>Level 2: Propose Day 💍</h2>
+            <button class="info-btn" onclick="showInfo('propose')">ℹ️</button>
+        </div>
+        <p>When We first met I surrendered to you without a word.</p>
+        <p>Do you accept my surrender forever?</p>
+        <div class="btn-group">
+            <button class="action-btn" id="yes-btn" onclick="nextLevel(3)">YES, I DO</button>
+            <button id="no-btn" onmouseover="moveNoBtn()" ontouchstart="moveNoBtn()" onclick="moveNoBtn()">Nah? 🥺</button>
+        </div>
+    </div>
+
+    <div id="level-3" class="level">
+        <div class="level-header">
+            <h2>Level 3: Chocolate Day 🍫</h2>
+            <button class="info-btn" onclick="showInfo('chocolate')">ℹ️</button>
+        </div>
+        <p>A package just arrived from BigBasket!</p>
+        <p>Tap 5 times to see if it's your favorite Dark Chocolate.</p>
+        <div id="basket-box" onclick="tapChocolate()">📦</div>
+        <p id="choco-count" style="font-size: 0.8rem; color: #aaa;">Tap tap tap...</p>
+    </div>
+
+    <div id="level-4" class="level">
+        <div class="level-header">
+            <h2>Level 4: Teddy Day 🧸</h2>
+            <button class="info-btn" onclick="showInfo('teddy')">ℹ️</button>
+        </div>
+        <p>Before we go to space, reveal your suit!</p>
+        <p>(Click the tiles to clear the fog)</p>
+        <div class="puzzle-grid">
+            <div class="tile" onclick="revealTile(this)">?</div>
+            <div class="tile" onclick="revealTile(this)">?</div>
+            <div class="tile" onclick="revealTile(this)">?</div>
+            <div class="tile" onclick="revealTile(this)">?</div>
+        </div>
+    </div>
+
+    <div id="level-5" class="level">
+        <div class="level-header">
+            <h2>Level 5: Promise Day 🤝</h2>
+            <button class="info-btn" onclick="showInfo('promise')">ℹ️</button>
+        </div>
+        <p>Two Libras need perfect harmony.</p>
+        <p>Balance the scales by agreeing to these terms:</p>
+        <div class="checkbox-list">
+            <label><input type="checkbox" class="promise-check"> I promise to support your dreams.</label>
+            <label><input type="checkbox" class="promise-check"> I promise to watch Disney movies with you.</label>
+            <label><input type="checkbox" class="promise-check"> I promise to make you feel special always and protect your energy.</label>
+            <label><input type="checkbox" class="promise-check"> I promise to keep the Dark Chocolate stocked.</label>
+        </div>
+        <button class="action-btn" onclick="checkPromises()">Balance The Scales</button>
+    </div>
+
+    <div id="level-6" class="level">
+        <div class="level-header">
+            <h2>Level 6: Hug Day 🤗</h2>
+            <button class="info-btn" onclick="showInfo('hug')">ℹ️</button>
+        </div>
+        <p>Remember the bus ride? Mom's chapatis, bottle gourd, and non-alcoholic wine...</p>
+        <p><strong>Hold the Moon</strong> to relive that warm hug.</p>
+        <div class="moon-img-container" id="bottle-display" style="display:none;">
+            <img src="moon-light-dinner.jpg" alt="Wine Bottle">
+        </div>
+        <div id="moon-btn" onmousedown="startMoon()" onmouseup="stopMoon()" ontouchstart="startMoon()" ontouchend="stopMoon()">🌕</div>
+        <p id="moon-text" style="font-size: 0.9rem; opacity: 0.8;">Hold to feel the magic...</p>
+    </div>
+
+    <div id="level-7" class="level">
+        <div class="level-header">
+            <h2>Level 7: Kiss Day 💋</h2>
+            <button class="info-btn" onclick="showInfo('kiss')">ℹ️</button>
+        </div>
+        <p>Our first kiss on the bus...</p>
+        <p>Catch 5 <strong>Flying Hearts</strong> to steal a kiss!</p>
+        <p style="font-size: 0.8rem; color: #aaa;">(Avoid the onions!)</p>
+        <div id="game-area"></div>
+        <p>Score: <span id="kiss-score">0</span> / 5</p>
+    </div>
+
+    <div id="level-8" class="level">
+        <div class="level-header">
+            <h2>Level 8: Valentine's Day ❤️</h2>
+            <button class="info-btn" onclick="showInfo('valentine')">ℹ️</button>
+        </div>
+        <p>Where did the October Boy surrender to the September Girl?</p>
+        <input type="text" id="password-input" placeholder="City name..." style="padding: 10px; border-radius: 20px; border: none; text-align: center; color: black;">
+        <br>
+        <button class="action-btn" onclick="checkPassword()">Unlock My Heart</button>
+        <p id="wrong-pass" style="color: #ff4b6e; display:none;">Think about where we met!</p>
+    </div>
+
+    <div id="level-9" class="level">
+        <h1>My Perfect Balance ♎</h1>
+        <div class="us-photo">
+            <img src="my_fav_of_us.png" width="100%" style="border-radius:10px;">
+        </div>
+        <p>"To infinity and beyond." 🚀</p>
+        <p class="disney-quote">You are my effortless surrender.</p>
+        <p>Happy Valentine's Week, my love!</p>
+        <button class="action-btn" onclick="alert('I love you moreeee papaaa! ❤️')">Love You</button>
+    </div>
+
+
+
+</div>
+
+<script>
+    document.body.addEventListener('click', function() {
+    var audio = document.getElementById('bgMusic');
+    audio.play();
+  }, { once: true });
+    // --- BACKGROUND GENERATOR ---
+    function createSpaceLoveBackground() {
+        const symbols = ['❤️', '❤️', '✨', '🪐', '♎', '💘', '⭐', '❤️'];
+        const container = document.body;
+        for(let i=0; i<50; i++) {
+            const div = document.createElement('div');
+            div.classList.add('bg-symbol');
+            div.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.top = Math.random() * 100 + 'vh';
+            const size = Math.random() * 20 + 10; 
+            div.style.fontSize = size + 'px';
+            const duration = Math.random() * 3 + 2; 
+            div.style.setProperty('--duration', duration + 's');
+            const colors = ['#ff4b6e', '#ffd700', '#ffffff', '#ff8fa3'];
+            div.style.color = colors[Math.floor(Math.random() * colors.length)];
+            container.appendChild(div);
+        }
+    }
+    createSpaceLoveBackground();
+
+    // --- HEART BURST ANIMATION (Google Meet Style) ---
+    function celebrateLove() {
+        const hearts = ['❤️', '💖', '💝', '💕', '💗', '💞'];
+        
+        // Create a burst every 300ms for 5 seconds
+        const interval = setInterval(() => {
+            for(let i=0; i<10; i++) { // Spawn 10 hearts at once
+                const heart = document.createElement('div');
+                heart.classList.add('burst-heart');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                
+                // Random horizontal position (0 to 100vw)
+                heart.style.left = Math.random() * 100 + 'vw';
+                
+                // Randomize speed/size
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's'; // 3-5s float time
+                heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                
+                document.body.appendChild(heart);
+                
+                // Cleanup
+                setTimeout(() => { heart.remove(); }, 5000);
+            }
+        }, 300);
+
+        // Stop celebrating after 5 seconds
+        setTimeout(() => { clearInterval(interval); }, 5000);
+    }
+
+    // --- INFO MODAL LOGIC ---
+    const facts = {
+        'rose': "Did you know? In the Victorian era, people used 'floriography' (language of flowers) to send secret messages. Red roses explicitly meant 'I love you'!",
+        'propose': "Fun Fact: The tradition of giving a diamond ring for a proposal started in 1477 when Archduke Maximilian of Austria proposed to Mary of Burgundy.",
+        'chocolate': "History: The Aztecs believed chocolate was a gift from the god of wisdom. Also, dark chocolate releases dopamine, the pleasure chemical!",
+        'teddy': "Origin: The 'Teddy Bear' was invented in 1902 and named after US President Theodore 'Teddy' Roosevelt, who refused to shoot a bear on a hunting trip.",
+        'promise': "Significance: A promise is the glue of a relationship. The 'Pinky Promise' originated in Japan (Yubikiri), symbolizing a bond that cannot be broken.",
+        'hug': "Science: Hugging releases Oxytocin, the 'cuddle hormone,' which lowers stress and strengthens the bond between two people immediately.",
+        'kiss': "History: In ancient Rome, couples used to kiss to seal legal contracts. That's why we say 'sealed with a kiss'!",
+        'valentine': "Legend: St. Valentine was a Roman priest who performed secret weddings against the Emperor's orders because he believed in love above war."
+    };
+
+    function showInfo(day) {
+        document.getElementById('modal-text').innerText = facts[day];
+        document.getElementById('info-modal').style.display = 'flex';
+    }
+    function closeInfo() { document.getElementById('info-modal').style.display = 'none'; }
+
+    // --- GENERAL LOGIC ---
+    let currentLevel = 0;
+    const flowerPhotoURL = "the-divine-flower.jpg"; 
+
+    function nextLevel(level) {
+        document.querySelectorAll('.level').forEach(l => l.classList.remove('active'));
+        document.getElementById(`level-${level}`).classList.add('active');
+        if(level === 1) initGarden();
+        if(level === 7) startKissGame();
+        if(level === 9) celebrateLove(); // Trigger celebration on final level
+    }
+
+    // --- LEVEL 1: GARDEN ---
+    function initGarden() {
+        const grid = document.getElementById('garden-grid');
+        grid.innerHTML = '';
+        const spaceObjects = ['☄️', '🪐', '🌑', '⭐', '🚀', '🛸', '🌍', '👽', '🔭', '🛰️', '🌌'];
+        let items = [];
+        for(let i=0; i<11; i++) items.push(spaceObjects[Math.floor(Math.random() * spaceObjects.length)]);
+        items.push('FLOWER'); 
+        items.sort(() => Math.random() - 0.5);
+
+        items.forEach(item => {
+            let div = document.createElement('div');
+            if(item === 'FLOWER') {
+                div.innerHTML = `<img src="${flowerPhotoURL}" class="my-flower-img">`;
+                div.onclick = () => nextLevel(2);
+            } else {
+                div.textContent = item;
+                div.onclick = function() { this.style.opacity = '0'; }
+            }
+            grid.appendChild(div);
+        });
+    }
+
+    // --- LEVEL 2: ROBOT ---
+    function moveNoBtn() {
+        const btn = document.getElementById('no-btn');
+        const x = (Math.random() * 240) - 120; 
+        const y = (Math.random() * 240) - 120;
+        const rotate = Math.random() * 360;
+        btn.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+    }
+
+    // --- LEVEL 3: BASKET ---
+    let taps = 0;
+    function tapChocolate() {
+        taps++;
+        const box = document.getElementById('basket-box');
+        box.classList.remove('shake');
+        void box.offsetWidth; box.classList.add('shake');
+        if(taps === 5) {
+            box.innerText = '🍫'; 
+            document.getElementById('choco-count').innerText = "Dark Chocolate Found!";
+            setTimeout(() => nextLevel(4), 1000);
+        }
+    }
+
+    // --- LEVEL 4: PUZZLE ---
+    let revealedTiles = 0;
+    function revealTile(tile) {
+        if(!tile.classList.contains('hidden')) {
+            tile.classList.add('hidden');
+            revealedTiles++;
+            if(revealedTiles === 4) setTimeout(() => nextLevel(5), 800);
+        }
+    }
+
+    // --- LEVEL 5: PROMISES ---
+    function checkPromises() {
+        const checks = document.querySelectorAll('.promise-check');
+        const allChecked = Array.from(checks).every(c => c.checked);
+        if(allChecked) nextLevel(6);
+        else alert("We need balance! Sign everything! ♎");
+    }
+
+    // --- LEVEL 6: MOON ---
+    let moonTimer;
+    function startMoon() {
+        document.getElementById('moon-text').innerText = "Recalling the memory...";
+        document.getElementById('moon-btn').style.transform = "scale(0.9)";
+        moonTimer = setTimeout(() => {
+            document.getElementById('bottle-display').style.display = "block";
+            document.getElementById('moon-text').innerText = "That magical night...";
+            setTimeout(() => nextLevel(7), 2000);
+        }, 2000); 
+    }
+    function stopMoon() {
+        clearTimeout(moonTimer);
+        document.getElementById('moon-btn').style.transform = "scale(1)";
+        document.getElementById('moon-text').innerText = "Hold to feel the magic...";
+    }
+
+    // --- LEVEL 7: HEART CATCHER ---
+    let score = 0;
+    let gameInterval;
+    function startKissGame() {
+        score = 0;
+        document.getElementById('kiss-score').innerText = score;
+        gameInterval = setInterval(createFallingItem, 1000); 
+    }
+    function createFallingItem() {
+        const area = document.getElementById('game-area');
+        const item = document.createElement('div');
+        const isTarget = Math.random() > 0.7; 
+        item.innerText = isTarget ? '❤️' : '🧅'; 
+        item.classList.add('falling-item');
+        item.style.left = Math.random() * 80 + 10 + '%'; 
+        
+        item.onclick = function() {
+            if(isTarget) {
+                score++;
+                document.getElementById('kiss-score').innerText = score;
+                this.remove(); this.style.transform = "scale(1.5)";
+                if(score >= 5) {
+                    clearInterval(gameInterval);
+                    document.querySelectorAll('.falling-item').forEach(i => i.remove());
+                    nextLevel(8);
+                }
+            } else { this.innerText = "❌"; }
+        };
+        area.appendChild(item);
+        setTimeout(() => { if(item.parentNode) item.remove(); }, 4000);
+    }
+
+    // --- LEVEL 8: PASSWORD ---
+    function checkPassword() {
+        const input = document.getElementById('password-input').value.toLowerCase();
+        if(input.includes("gujarat") || input.includes("ahmedabad") || input.includes("surat")) {
+            nextLevel(9);
+        } else {
+            document.getElementById('wrong-pass').style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>
