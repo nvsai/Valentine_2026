@@ -6,6 +6,7 @@
     <title>Sept & Oct ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
+
         /* --- SPACE & LOVE THEME CSS --- */
         :root {
             --bg-gradient: radial-gradient(circle at 50% 50%, #800f2f 0%, #4a0a25 40%, #0f0c29 100%);
@@ -30,6 +31,12 @@
             user-select: none;
             position: relative;
         }
+
+        .action-btn:disabled {
+    background: #4b6cb7; /* Change color during countdown */
+    cursor: wait;
+    opacity: 0.8;
+}
 
         /* --- BACKGROUND SYMBOLS --- */
         .bg-symbol {
@@ -299,9 +306,9 @@
     <div id="level-9" class="level">
         <h1>My Perfect Balance ♎</h1>
         <div class="us-photo">
-            <img src="my_fav_of_us.png" width="100%" style="border-radius:10px;">
+            <img src="my_fav_of_us.png" width="80%" style="border-radius:10px;">
         </div>
-        <p>"To infinity and beyond." 🚀</p>
+        <p>"Until infinity and beyond." 🚀</p>
         <p class="disney-quote">You are my effortless surrender.</p>
         <p>Happy Valentine's Week, my love!</p>
         <button class="action-btn" onclick="alert('I love you moreeee papaaa! ❤️')">Love You</button>
@@ -312,10 +319,7 @@
 </div>
 
 <script>
-    document.body.addEventListener('click', function() {
-    var audio = document.getElementById('bgMusic');
-    audio.play();
-  }, { once: true });
+   
     // --- BACKGROUND GENERATOR ---
     function createSpaceLoveBackground() {
         const symbols = ['❤️', '❤️', '✨', '🪐', '♎', '💘', '⭐', '❤️'];
@@ -389,12 +393,37 @@
     const flowerPhotoURL = "the-divine-flower.jpg"; 
 
     function nextLevel(level) {
+    // Check if we are launching from Level 0 to Level 1
+    if (level === 1) {
+        const audio = document.getElementById('bgMusic');
+        audio.play(); // Start the music immediately
+
+        const launchBtn = document.querySelector('#level-0 .action-btn');
+        let countdown = 10;
+        
+        // Update button text to show countdown
+        launchBtn.disabled = true;
+        const timer = setInterval(() => {
+            launchBtn.innerText = `Ignition in ${countdown}... 🚀`;
+            countdown--;
+            if (countdown < 0) {
+                clearInterval(timer);
+                // Proceed to Level 1
+                document.querySelectorAll('.level').forEach(l => l.classList.remove('active'));
+                document.getElementById('level-1').classList.add('active');
+                initGarden();
+            }
+        }, 1000);
+
+    } else {
+        // Normal transition for all other levels
         document.querySelectorAll('.level').forEach(l => l.classList.remove('active'));
         document.getElementById(`level-${level}`).classList.add('active');
-        if(level === 1) initGarden();
+        
         if(level === 7) startKissGame();
-        if(level === 9) celebrateLove(); // Trigger celebration on final level
+        if(level === 9) celebrateLove();
     }
+}
 
     // --- LEVEL 1: GARDEN ---
     function initGarden() {
